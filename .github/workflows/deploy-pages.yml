@@ -1,7 +1,7 @@
 name: Deploy to GitHub Pages
 
 # Fetches open space data, builds the static export and publishes it to the gh-pages branch,
-# which GitHub Pages serves at https://<owner>.github.io/<repo>/
+# which GitHub Pages serves at https://orbita.siddharthnegi.dev/
 on:
   push:
     branches: [main]
@@ -30,17 +30,19 @@ jobs:
       - name: Fetch open data
         run: node scripts/fetch-data.mjs
         env:
-          FALLBACK_BASE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          FALLBACK_BASE: https://orbita.siddharthnegi.dev
       - name: Build Earth textures
         run: node scripts/fetch-earth-textures.mjs
         env:
-          FALLBACK_BASE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          FALLBACK_BASE: https://orbita.siddharthnegi.dev
       - run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_BASE_PATH: ""
           NEXT_TELEMETRY_DISABLED: 1
-      # Without this, Pages' Jekyll step drops the _next/ folder
-      - run: touch out/.nojekyll
+      # Without .nojekyll, Pages' Jekyll step drops the _next/ folder; CNAME keeps the custom domain on force-push
+      - run: |
+          touch out/.nojekyll
+          echo "orbita.siddharthnegi.dev" > out/CNAME
       - name: Publish to gh-pages
         working-directory: out
         run: |

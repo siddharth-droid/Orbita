@@ -2,7 +2,7 @@
 
 Every satellite, live. A real-time satellite tracker with pass predictions for your location, a worldwide launch schedule, aurora forecasts and live Earth events. Built entirely on open data and runs as a static site.
 
-**Live:** https://siddharth-droid.github.io/WebTest/
+**Live:** https://orbita.siddharthnegi.dev/
 
 ![Live tracker](docs/01-tracker.jpg)
 
